@@ -1,5 +1,5 @@
 {
-  "_id": "69c6d64c53320890aa9b7b31",
+  "_id": "69c6df1d8024e7e4a52b9e09",
   "documentType": "GRN",
   "poNumber": "CI4PO05788",
   "documentNumber": "CI4000020234",
@@ -226,9 +226,9 @@
     }
   ],
   "originalFileName": "GRN.pdf",
-  "mimeType": "application/pdf",
+  "mimeType": "text/plain",
   "extractionConfidence": 1,
   "fileHash": "1d5cbee053e150795b5e12d27cce3247be3e97ca45941aabe3b13bc9eed9ebe3",
-  "createdAt": "2026-03-27T19:11:08.074Z",
-  "updatedAt": "2026-03-27T19:11:08.074Z"
+  "createdAt": "2026-03-27T19:48:45.513Z",
+  "updatedAt": "2026-03-27T19:48:45.513Z"
 }

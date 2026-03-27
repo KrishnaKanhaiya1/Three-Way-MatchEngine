@@ -6,12 +6,70 @@ A high-performance **Three-Way Match Engine** for automated reconciliation of **
 
 ## 📑 Table of Contents
 
+- [Approach & Design](#approach--design)
 - [Architecture](#architecture)
 - [Match Logic Flow](#match-logic-flow)
 - [Database Schema](#database-schema)
 - [Handling Out-of-Order Uploads](#handling-out-of-order-uploads)
 - [API Documentation](#api-documentation)
 - [Setup & Installation](#setup--installation)
+
+---
+
+## 🎯 Approach & Design
+
+### Core Strategy
+
+The Three-Way Match Engine uses a **trigger-based, re-evaluating architecture**:
+
+1. **PDF Extraction**: Google Gemini 2.5-Flash API extracts structured JSON from procurement PDFs
+2. **Incremental Storage**: Documents are saved to MongoDB as they arrive (any order)
+3. **Automatic Re-Evaluation**: On each upload/deletion, the engine re-runs matching against ALL documents for that PO
+4. **Deterministic Output**: Match status reflects the complete current state of documents
+
+### Parsing Approach
+
+- **Multi-Format Date Handling**: Normalizes dates in DD-MM-YYYY, MM/DD/YYYY, month-names, and ISO formats
+- **Fuzzy Item Matching**: Uses token-based similarity (Levenshtein-like) to match items despite OCR inconsistencies
+- **Prefix/Suffix Tolerance**: Handles item codes with variable prefixes (e.g., "FG-11423" vs "11423")
+- **Confidence Storage**: Gemini extraction confidence scores are logged for low-confidence field review
+
+### Matching Logic
+
+Uses **O(N) hash-map based algorithm**:
+- Build maps: `itemCode → quantity`, `itemCode → description`
+- Lookup: Each item checked against PO, GRN, Invoice in O(1) time
+- Validate: 6 rules applied per-item (quantities, dates, duplicates)
+- Result: Aggregate status (matched/partially_matched/mismatch/insufficient_documents)
+
+### Assumptions
+
+1. **Item Codes**: Primary match key (most reliable after normalization)
+2. **Vendor Consistency**: Vendor name must match across all three documents
+3. **Quantity Direction**: GRN ≤ PO ≤ Invoice is the expected flow (but not required for upload order)
+4. **Single PO**: One MatchResult per PO number (not per document combination)
+5. **6% Price Tolerance**: Invoiced amount may differ from qty×unitPrice by up to 6% (tax/rounding)
+6. **MongoDB Availability**: Falls back to in-memory store if MongoDB unavailable
+
+### Tradeoffs
+
+| Aspect | Choice | Why | Alternative |
+|--------|--------|-----|-------------|
+| **Item Matching** | Token similarity + prefix/suffix | Handles OCR errors | Exact match (breaks with typos) |
+| **Database** | Mongoose with fallback | Supports both cloud & local | Pure SQL (harder to scale) |
+| **Gemini Extraction** | Full structured JSON | Rich data for audit trail | Simple field extraction |
+| **Rate Limit Handling** | 503 error + retry logic | Transparent to evaluator | Silent failures (bad UX) |
+| **Match Re-evaluation** | On every upload | Always consistent | Lazy evaluation (stale data) |
+
+### Future Improvements (with more time)
+
+1. **Caching Layer**: Redis cache for frequently-accessed match results
+2. **Batch Extraction**: Queue and deduplicate simultaneous uploads
+3. **Audit Trail**: Full change history per document (who/when/what changed)
+4. **OCR Confidence Thresholds**: Auto-flag items with <80% confidence for manual review
+5. **Multi-PO Bundles**: Handle consolidated invoices spanning multiple POs
+6. **Async Extraction**: Long-running extractions with webhook callbacks
+7. **GraphQL API**: Alternative to REST for flexible querying
 
 ---
 

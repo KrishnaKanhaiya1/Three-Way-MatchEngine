@@ -1,5 +1,5 @@
 {
-  "_id": "69c6d59853320890aa9b7b1d",
+  "_id": "69c6defe8024e7e4a52b9e01",
   "documentType": "PO",
   "poNumber": "CI4PO05788",
   "documentNumber": "CI4PO05788",
@@ -9,7 +9,7 @@
   "items": [
     {
       "itemCode": "11423",
-      "description": "psm Cheesy Spicy Veg Momos 24.0 Pieces",
+      "description": "Cheesy Spicy Veg Momos 24.0 Pieces",
       "quantity": 50,
       "unitPrice": 220.762,
       "totalAmount": 11590
@@ -37,35 +37,35 @@
     },
     {
       "itemCode": "18906",
-      "description": "psm Spring Rolls Veg Frozen 240.0 g",
+      "description": "Spring Rolls Veg Frozen 240.0 g",
       "quantity": 175,
       "unitPrice": 123.048,
       "totalAmount": 22610
     },
     {
       "itemCode": "253430",
-      "description": "psm Pork Salami 200.0 g",
+      "description": "Pork Salami 200.0 g",
       "quantity": 75,
       "unitPrice": 188.19,
       "totalAmount": 14820
     },
     {
       "itemCode": "33387",
-      "description": "psm Frozen Chicken Chilli Salami 200.0 g",
+      "description": "Frozen Chicken Chilli Salami 200.0 g",
       "quantity": 75,
       "unitPrice": 126.667,
       "totalAmount": 9975
     },
     {
       "itemCode": "33388",
-      "description": "psm Frozen Chicken Pepperoni Salami 100.0 g",
+      "description": "Frozen Chicken Pepperoni Salami 100.0 g",
       "quantity": 120,
       "unitPrice": 108.571,
       "totalAmount": 13680
     },
     {
       "itemCode": "33390",
-      "description": "psm Chicken Seekh Kebab 500.0 g",
+      "description": "Chicken Seekh Kebab 500.0 g",
       "quantity": 272,
       "unitPrice": 228,
       "totalAmount": 65116.8
@@ -79,7 +79,7 @@
     },
     {
       "itemCode": "414867",
-      "description": "psm Chinese Veg Spring Rolls 240.0 g",
+      "description": "Chinese Veg Spring Rolls 240.0 g",
       "quantity": 25,
       "unitPrice": 119.429,
       "totalAmount": 3135
@@ -93,49 +93,49 @@
     },
     {
       "itemCode": "4459",
-      "description": "psm Original Chicken Momos 24.0 Pieces",
+      "description": "Original Chicken Momos 24.0 Pieces",
       "quantity": 475,
       "unitPrice": 220.762,
       "totalAmount": 110105
     },
     {
       "itemCode": "4460",
-      "description": "psm Spicy Chicken Momos 24.0 Pieces",
+      "description": "Spicy Chicken Momos 24.0 Pieces",
       "quantity": 325,
       "unitPrice": 220.762,
       "totalAmount": 75335
     },
     {
       "itemCode": "4461",
-      "description": "psm Veg & Paneer Momos 24.0 Pieces",
+      "description": "Veg & Paneer Momos 24.0 Pieces",
       "quantity": 75,
       "unitPrice": 202.667,
       "totalAmount": 15960
     },
     {
       "itemCode": "453259",
-      "description": "psm Chicken Cheese & Onion Sausage 250.0 g",
+      "description": "Chicken Cheese & Onion Sausage 250.0 g",
       "quantity": 40,
       "unitPrice": 144.762,
       "totalAmount": 6080
     },
     {
       "itemCode": "4694",
-      "description": "psm Original Chicken Momos 10.0 Pieces",
+      "description": "Original Chicken Momos 10.0 Pieces",
       "quantity": 450,
       "unitPrice": 133.905,
       "totalAmount": 63270
     },
     {
       "itemCode": "4695",
-      "description": "psm Spicy Chicken Momos 10.0 Pieces",
+      "description": "Spicy Chicken Momos 10.0 Pieces",
       "quantity": 100,
       "unitPrice": 133.905,
       "totalAmount": 14060
     },
     {
       "itemCode": "4697",
-      "description": "psm Veg & Paneer Momos 10.0 Pieces",
+      "description": "Veg & Paneer Momos 10.0 Pieces",
       "quantity": 400,
       "unitPrice": 112.19,
       "totalAmount": 47120
@@ -149,105 +149,105 @@
     },
     {
       "itemCode": "4698",
-      "description": "psm Chicken Ham 200.0 g",
+      "description": "Chicken Ham 200.0 g",
       "quantity": 150,
       "unitPrice": 133.905,
       "totalAmount": 21090
     },
     {
       "itemCode": "4699",
-      "description": "psm Pork Sausage 250.0 g",
+      "description": "Pork Sausage 250.0 g",
       "quantity": 40,
       "unitPrice": 170.095,
       "totalAmount": 7144
     },
     {
       "itemCode": "4700",
-      "description": "psm Pork Ham 200.0 g",
+      "description": "Pork Ham 200.0 g",
       "quantity": 50,
       "unitPrice": 177.333,
       "totalAmount": 9310
     },
     {
       "itemCode": "4701",
-      "description": "psm Pork Breakfast Bacon 300.0 g",
+      "description": "Pork Breakfast Bacon 300.0 g",
       "quantity": 20,
       "unitPrice": 267.81,
       "totalAmount": 5624
     },
     {
       "itemCode": "470663",
-      "description": "psm Whole Wheat Momos - Veg & Paneer 330.0 g",
+      "description": "Whole Wheat Momos - Veg & Paneer 330.0 g",
       "quantity": 80,
       "unitPrice": 162.857,
       "totalAmount": 13680
     },
     {
       "itemCode": "489632",
-      "description": "psm Tandoori Momos - Chicken 280.0 g",
+      "description": "Tandoori Momos - Chicken 280.0 g",
       "quantity": 35,
       "unitPrice": 159.238,
       "totalAmount": 5852
     },
     {
       "itemCode": "49168",
-      "description": "psm Peri Peri Veg Momos 15.0 Pieces",
+      "description": "Peri Peri Veg Momos 15.0 Pieces",
       "quantity": 80,
       "unitPrice": 88.667,
       "totalAmount": 7448
     },
     {
       "itemCode": "498695",
-      "description": "psm Chicken Salami 200.0 g",
+      "description": "Chicken Salami 200.0 g",
       "quantity": 25,
       "unitPrice": 137.524,
       "totalAmount": 3610
     },
     {
       "itemCode": "526303",
-      "description": "psm Chicken Pepper & Herb Sausage 250.0 g",
+      "description": "Chicken Pepper & Herb Sausage 250.0 g",
       "quantity": 20,
       "unitPrice": 141.143,
       "totalAmount": 2964
     },
     {
       "itemCode": "598770",
-      "description": "psm Pork Breakfast Bacon 150.0 g",
+      "description": "Pork Breakfast Bacon 150.0 g",
       "quantity": 36,
-      "unitPrice": 152,
+      "unitPrice": 133.905,
       "totalAmount": 5745.6
     },
     {
       "itemCode": "6664",
-      "description": "psm Chicken Sausages 250.0 g",
+      "description": "Chicken Sausages 250.0 g",
       "quantity": 380,
       "unitPrice": 130.286,
       "totalAmount": 51984
     },
     {
       "itemCode": "6665",
-      "description": "psm Chicken Cheese & Chilli Sausages 250.0 g",
+      "description": "Chicken Cheese & Chilli Sausages 250.0 g",
       "quantity": 100,
       "unitPrice": 133.905,
       "totalAmount": 14060
     },
     {
       "itemCode": "730016",
-      "description": "psm Whole Wheat Chicken Momos 330.0 g",
+      "description": "Whole Wheat Chicken Momos 330.0 g",
       "quantity": 80,
       "unitPrice": 170.095,
       "totalAmount": 14288
     },
     {
       "itemCode": "750414",
-      "description": "psm Super Saver Chicken Momo Pack (Chef Momos) 1.0 kg",
+      "description": "Super Saver Chicken Momo Pack (Chef Momos) 1.0 kg",
       "quantity": 72,
       "unitPrice": 247.619,
       "totalAmount": 18720
     },
     {
       "itemCode": "755774",
-      "description": "psm Chicken & Cheese Momos 540.0 g",
+      "description": "Chicken & Cheese Momos 540.0 g",
       "quantity": 25,
       "unitPrice": 238.857,
       "totalAmount": 6270
@@ -261,37 +261,37 @@
     },
     {
       "itemCode": "81521",
-      "description": "psm Peri Peri Chicken Momos 250.0 g",
+      "description": "Peri Peri Chicken Momos 250.0 g",
       "quantity": 640,
       "unitPrice": 72.019,
       "totalAmount": 48396.8
     },
     {
       "itemCode": "89201",
-      "description": "psm Chicken English Breakfast Sausage 1.0 kg",
+      "description": "Chicken English Breakfast Sausage 1.0 kg",
       "quantity": 162,
       "unitPrice": 222.857,
       "totalAmount": 37908
     },
     {
       "itemCode": "205950",
-      "description": "psm Frozen Pork Pepperoni Salami 100.0 g",
+      "description": "Frozen Pork Pepperoni Salami 100.0 g",
       "quantity": 40,
       "unitPrice": 133.905,
       "totalAmount": 5624
     },
     {
       "itemCode": "507809",
-      "description": "psm Pizza Minis Chicken Tikka 180.0 g",
+      "description": "Pizza Minis Chicken Tikka 180.0 g",
       "quantity": 50,
       "unitPrice": 115.086,
       "totalAmount": 6042
     }
   ],
   "originalFileName": "PO.pdf",
-  "mimeType": "application/pdf",
+  "mimeType": "text/plain",
   "extractionConfidence": 1,
   "fileHash": "b711e7d9437d5fd0cd9f5fa32ffafdf1bc7489968f7f8234bec5cd70a51ca3cb",
-  "createdAt": "2026-03-27T19:08:08.691Z",
-  "updatedAt": "2026-03-27T19:08:08.691Z"
+  "createdAt": "2026-03-27T19:48:14.648Z",
+  "updatedAt": "2026-03-27T19:48:14.648Z"
 }
