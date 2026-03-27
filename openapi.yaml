@@ -1,0 +1,330 @@
+openapi: 3.0.3
+info:
+  title: Three-Way Match Engine API
+  description: |
+    A high-performance procurement document matching engine for PO, GRN, and Invoice reconciliation.
+    
+    ## How it works
+    1. Upload PO, GRN, and Invoice PDFs via `POST /api/documents/upload`
+    2. Gemini AI extracts structured data from each PDF
+    3. The match engine automatically evaluates all three documents against each other
+    4. Query match results via `/api/match/:poNumber`
+    
+    ## Mismatch Reason Codes
+    | Code | Description |
+    |------|-------------|
+    | `grn_qty_exceeds_po_qty` | GRN received more units than PO ordered |
+    | `invoice_qty_exceeds_po_qty` | Invoice billed more units than PO ordered |
+    | `invoice_qty_exceeds_grn_qty` | Invoice billed more units than GRN received |
+    | `invoice_date_after_po_date` | Invoice date is after PO date (date anomaly) |
+    | `duplicate_po` | More than one PO document found for this PO number |
+    | `item_missing_in_po` | Item in GRN/Invoice is not present in the PO |
+  version: 1.0.0
+  contact:
+    name: Three-Way Match Engine
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+tags:
+  - name: Documents
+    description: Upload and manage procurement documents
+  - name: Match Results
+    description: Query three-way match evaluation results
+  - name: Health
+    description: Server health check
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      responses:
+        '200':
+          description: Server is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/documents/upload:
+    post:
+      tags: [Documents]
+      summary: Upload a procurement document PDF
+      description: |
+        Upload a PDF file (PO, GRN, or Invoice). The system will:
+        1. Extract structured data using Gemini AI
+        2. Save to MongoDB
+        3. Automatically trigger three-way match evaluation
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file, documentType]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF file (max 20MB)
+                documentType:
+                  type: string
+                  enum: [PO, GRN, INVOICE]
+                  description: Type of the uploaded document
+      responses:
+        '201':
+          description: Document uploaded and processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Duplicate document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Extraction failed
+
+  /api/documents:
+    get:
+      tags: [Documents]
+      summary: List all documents
+      parameters:
+        - in: query
+          name: poNumber
+          schema: { type: string }
+          description: Filter by PO number
+        - in: query
+          name: documentType
+          schema:
+            type: string
+            enum: [PO, GRN, INVOICE]
+          description: Filter by document type
+      responses:
+        '200':
+          description: List of documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  count: { type: integer }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Document' }
+
+  /api/documents/{id}:
+    get:
+      tags: [Documents]
+      summary: Get document by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Document details
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Documents]
+      summary: Delete a document
+      description: Deletes the document and re-evaluates the match for its PO number.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Document deleted and match re-evaluated
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/match:
+    get:
+      tags: [Match Results]
+      summary: List all match results
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [matched, partially_matched, mismatch, insufficient_documents, duplicate_po]
+          description: Filter by match status
+      responses:
+        '200':
+          description: List of match results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  count: { type: integer }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/MatchResult' }
+
+  /api/match/{poNumber}:
+    get:
+      tags: [Match Results]
+      summary: Get match result for a specific PO
+      parameters:
+        - in: path
+          name: poNumber
+          required: true
+          schema: { type: string }
+          example: PO-2026-001
+      responses:
+        '200':
+          description: Match result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchResult'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/match/{poNumber}/re-evaluate:
+    post:
+      tags: [Match Results]
+      summary: Manually re-evaluate a match
+      parameters:
+        - in: path
+          name: poNumber
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Match re-evaluated
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    UploadResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        message: { type: string }
+        document:
+          type: object
+          properties:
+            id: { type: string }
+            documentType: { type: string }
+            poNumber: { type: string }
+            documentNumber: { type: string }
+            vendorName: { type: string }
+            date: { type: string }
+            itemCount: { type: integer }
+        matchResult:
+          type: object
+          nullable: true
+          properties:
+            status: { type: string }
+            reasonCodes:
+              type: array
+              items: { type: string }
+            summary: { type: string }
+
+    Document:
+      type: object
+      properties:
+        _id: { type: string }
+        documentType:
+          type: string
+          enum: [PO, GRN, INVOICE]
+        poNumber: { type: string }
+        documentNumber: { type: string }
+        vendorName: { type: string }
+        date: { type: string }
+        dateISO:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        createdAt:
+          type: string
+          format: date-time
+
+    MatchResult:
+      type: object
+      properties:
+        poNumber: { type: string }
+        status:
+          type: string
+          enum: [matched, partially_matched, mismatch, insufficient_documents, duplicate_po]
+        reasonCodes:
+          type: array
+          items: { type: string }
+        summary: { type: string }
+        invoiceDateAfterPoDate: { type: boolean }
+        totalMatchedItems: { type: integer }
+        totalMismatchedItems: { type: integer }
+        totalItems: { type: integer }
+        itemDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemMatchDetail'
+
+    ItemMatchDetail:
+      type: object
+      properties:
+        itemCode: { type: string }
+        description: { type: string }
+        poQty: { type: number }
+        grnQty: { type: number }
+        invoiceQty: { type: number }
+        isMatched: { type: boolean }
+        reasonCodes:
+          type: array
+          items: { type: string }
+        discrepancies:
+          type: array
+          items: { type: string }
+
+    Item:
+      type: object
+      properties:
+        itemCode: { type: string }
+        description: { type: string }
+        quantity: { type: number }
+        unitPrice:
+          type: number
+          nullable: true
+
+    ErrorResponse:
+      type: object
+      properties:
+        success: { type: boolean, example: false }
+        error: { type: string }
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }

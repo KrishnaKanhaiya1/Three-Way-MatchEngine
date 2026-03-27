@@ -1,0 +1,234 @@
+{
+  "_id": "69c6d5ed53320890aa9b7b26",
+  "documentType": "INVOICE",
+  "poNumber": "CI4PO05788",
+  "documentNumber": "IN25MH2504251",
+  "vendorName": "M/s AFP",
+  "date": "24/03/2026",
+  "dateISO": "2026-03-23T18:30:00.000Z",
+  "items": [
+    {
+      "itemCode": "19022010",
+      "description": "PSM Cheesy Spicy Vegetable Momos 24Pcs",
+      "quantity": 50,
+      "unitPrice": 220.76,
+      "totalAmount": 11589.9
+    },
+    {
+      "itemCode": "16023200",
+      "description": "Meatigo RTC Meatigo Hot Wings 250g",
+      "quantity": 75,
+      "unitPrice": 126.67,
+      "totalAmount": 9975.26
+    },
+    {
+      "itemCode": "02071400",
+      "description": "Meatigo Chicken Curry Cuts 450g (5%)",
+      "quantity": 30,
+      "unitPrice": 141.14,
+      "totalAmount": 4445.91
+    },
+    {
+      "itemCode": "02071400",
+      "description": "Meatigo Chicken Boneless Breast 450g (5%)",
+      "quantity": 30,
+      "unitPrice": 199.05,
+      "totalAmount": 6270.08
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Pork PlainSalami200g",
+      "quantity": 75,
+      "unitPrice": 188.19,
+      "totalAmount": 14819.96
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen Chicken Chilli Salami200g",
+      "quantity": 75,
+      "unitPrice": 126.67,
+      "totalAmount": 9975.26
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen Chicken SeekhKabab 500g",
+      "quantity": 272,
+      "unitPrice": 228,
+      "totalAmount": 65116.8
+    },
+    {
+      "itemCode": "02071400",
+      "description": "Meatigo Chicken Drumsticks 450g (5%)",
+      "quantity": 270,
+      "unitPrice": 188.19,
+      "totalAmount": 53351.87
+    },
+    {
+      "itemCode": "20049000",
+      "description": "PSM Spring Roll-Chinese Veg 240g",
+      "quantity": 25,
+      "unitPrice": 119.43,
+      "totalAmount": 3135.04
+    },
+    {
+      "itemCode": "02071400",
+      "description": "Meatigo Chicken Keema (Mince) 450g (5%)",
+      "quantity": 360,
+      "unitPrice": 199.05,
+      "totalAmount": 75240.9
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Chicken Momos 24Pcs",
+      "quantity": 475,
+      "unitPrice": 220.76,
+      "totalAmount": 110104.05
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Spicy Chicken Momos 24Pcs",
+      "quantity": 325,
+      "unitPrice": 220.76,
+      "totalAmount": 75334.35
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Vegetable & Paneer Momos24Pcs",
+      "quantity": 75,
+      "unitPrice": 202.67,
+      "totalAmount": 15960.26
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Chicken Cheese & Onion Sausage 250g",
+      "quantity": 40,
+      "unitPrice": 144.76,
+      "totalAmount": 6079.92
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Chicken Momos 10Pcs",
+      "quantity": 450,
+      "unitPrice": 133.9,
+      "totalAmount": 63267.75
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Vegetable & Paneer Momos10Pcs",
+      "quantity": 400,
+      "unitPrice": 112.19,
+      "totalAmount": 47119.8
+    },
+    {
+      "itemCode": "16021000",
+      "description": "Meatigo RTC Everyday Chicken Breast 150g",
+      "quantity": 90,
+      "unitPrice": 119.43,
+      "totalAmount": 11286.14
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen Pork Sausage250g",
+      "quantity": 40,
+      "unitPrice": 170.1,
+      "totalAmount": 7144.2
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen PorkHam 200g",
+      "quantity": 50,
+      "unitPrice": 177.33,
+      "totalAmount": 9309.83
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Whole WheatMomos-Veg & Paneer 330g",
+      "quantity": 40,
+      "unitPrice": 162.86,
+      "totalAmount": 6840.12
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Peri Peri Veg Momos 15Pcs",
+      "quantity": 80,
+      "unitPrice": 88.67,
+      "totalAmount": 7448.28
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen Chicken Salami 200g",
+      "quantity": 25,
+      "unitPrice": 137.52,
+      "totalAmount": 3609.9
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen Pork Breakfast Bacon150g",
+      "quantity": 36,
+      "unitPrice": 152,
+      "totalAmount": 5745.6
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen Chicken Sausage 250g",
+      "quantity": 380,
+      "unitPrice": 130.29,
+      "totalAmount": 51985.71
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Whole WheatMomos-Chicken 330g",
+      "quantity": 80,
+      "unitPrice": 170.1,
+      "totalAmount": 14288.4
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM FS Chef Momo-Chicken 1kg",
+      "quantity": 72,
+      "unitPrice": 247.62,
+      "totalAmount": 18720.07
+    },
+    {
+      "itemCode": "19022010",
+      "description": "PSM Cheese & Chicken Momos540g",
+      "quantity": 25,
+      "unitPrice": 238.86,
+      "totalAmount": 6270.08
+    },
+    {
+      "itemCode": "16042000",
+      "description": "Meatigo RTC Everyday Fish Fillet 200g",
+      "quantity": 30,
+      "unitPrice": 188.19,
+      "totalAmount": 5927.99
+    },
+    {
+      "itemCode": "19022010",
+      "description": "Peri Peri Chicken Momos 250g",
+      "quantity": 640,
+      "unitPrice": 72.02,
+      "totalAmount": 48397.44
+    },
+    {
+      "itemCode": "16010000",
+      "description": "PSM Frozen PorkPepperoni Salami 100g",
+      "quantity": 40,
+      "unitPrice": 133.9,
+      "totalAmount": 5623.8
+    },
+    {
+      "itemCode": "19059090",
+      "description": "PSM Pizza Minis- Chicken Tikka 180g",
+      "quantity": 50,
+      "unitPrice": 115.09,
+      "totalAmount": 6042.23
+    }
+  ],
+  "originalFileName": "Invoice.pdf",
+  "mimeType": "application/pdf",
+  "extractionConfidence": 1,
+  "fileHash": "9aa7427f98a825f8a201b5e6d265fde99a778b8a59a42cfe9eee1b5a992120f8",
+  "createdAt": "2026-03-27T19:09:33.589Z",
+  "updatedAt": "2026-03-27T19:09:33.589Z"
+}

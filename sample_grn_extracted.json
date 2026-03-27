@@ -1,0 +1,234 @@
+{
+  "_id": "69c6d64c53320890aa9b7b31",
+  "documentType": "GRN",
+  "poNumber": "CI4PO05788",
+  "documentNumber": "CI4000020234",
+  "vendorName": "M/s AFP",
+  "date": "24-3-2026",
+  "dateISO": "2026-03-23T18:30:00.000Z",
+  "items": [
+    {
+      "itemCode": "11423",
+      "description": "psm Cheesy Spicy Veg Momos 24.0 Pieces",
+      "quantity": 50,
+      "unitPrice": 220.76,
+      "totalAmount": 11590.01
+    },
+    {
+      "itemCode": "11797",
+      "description": "Meatigo Hot Wings 250.0 g",
+      "quantity": 75,
+      "unitPrice": 126.67,
+      "totalAmount": 9975.03
+    },
+    {
+      "itemCode": "18003",
+      "description": "Meatigo Chicken Curry Cut Skinless Frozen 450.0 g",
+      "quantity": 30,
+      "unitPrice": 141.14,
+      "totalAmount": 4446
+    },
+    {
+      "itemCode": "18004",
+      "description": "Meatigo Chicken Boneless Breast Frozen 450.0 g",
+      "quantity": 30,
+      "unitPrice": 199.05,
+      "totalAmount": 6270.01
+    },
+    {
+      "itemCode": "205950",
+      "description": "psm Frozen Pork Pepperoni Salami 100.0 g",
+      "quantity": 40,
+      "unitPrice": 133.91,
+      "totalAmount": 5624.01
+    },
+    {
+      "itemCode": "253430",
+      "description": "psm Pork Salami 200.0 g",
+      "quantity": 75,
+      "unitPrice": 188.19,
+      "totalAmount": 14819.96
+    },
+    {
+      "itemCode": "33387",
+      "description": "psm Frozen Chicken Chilli Salami 200.0 g",
+      "quantity": 75,
+      "unitPrice": 126.67,
+      "totalAmount": 9975.03
+    },
+    {
+      "itemCode": "33390",
+      "description": "psm Chicken Seekh Kebab 500.0 g",
+      "quantity": 272,
+      "unitPrice": 228,
+      "totalAmount": 65116.8
+    },
+    {
+      "itemCode": "398656",
+      "description": "Meatigo Chicken Drumsticks 450.0 g",
+      "quantity": 270,
+      "unitPrice": 188.19,
+      "totalAmount": 53351.87
+    },
+    {
+      "itemCode": "414867",
+      "description": "psm Chinese Veg Spring Rolls 240.0 g",
+      "quantity": 25,
+      "unitPrice": 119.43,
+      "totalAmount": 3135.02
+    },
+    {
+      "itemCode": "432518",
+      "description": "Meatigo Chicken Kheema 450.0 g",
+      "quantity": 360,
+      "unitPrice": 199.05,
+      "totalAmount": 75240.14
+    },
+    {
+      "itemCode": "4459",
+      "description": "psm Original Chicken Momos 24.0 Pieces",
+      "quantity": 475,
+      "unitPrice": 220.76,
+      "totalAmount": 110105.05
+    },
+    {
+      "itemCode": "4460",
+      "description": "psm Spicy Chicken Momos 24.0 Pieces",
+      "quantity": 325,
+      "unitPrice": 220.76,
+      "totalAmount": 75335.03
+    },
+    {
+      "itemCode": "4461",
+      "description": "psm Veg & Paneer Momos 24.0 Pieces",
+      "quantity": 75,
+      "unitPrice": 202.67,
+      "totalAmount": 15960.03
+    },
+    {
+      "itemCode": "453259",
+      "description": "psm Chicken Cheese & Onion Sausage 250.0 g",
+      "quantity": 40,
+      "unitPrice": 144.76,
+      "totalAmount": 6080
+    },
+    {
+      "itemCode": "4694",
+      "description": "psm Original Chicken Momos 10.0 Pieces",
+      "quantity": 450,
+      "unitPrice": 133.91,
+      "totalAmount": 63270.11
+    },
+    {
+      "itemCode": "4697",
+      "description": "psm Veg & Paneer Momos 10.0 Pieces",
+      "quantity": 400,
+      "unitPrice": 112.19,
+      "totalAmount": 47119.8
+    },
+    {
+      "itemCode": "469735",
+      "description": "Meatigo Everyday Chicken Breast (Frozen) 150.0 g",
+      "quantity": 90,
+      "unitPrice": 119.43,
+      "totalAmount": 11286.04
+    },
+    {
+      "itemCode": "4699",
+      "description": "psm Pork Sausage 250.0 g",
+      "quantity": 40,
+      "unitPrice": 170.1,
+      "totalAmount": 7143.99
+    },
+    {
+      "itemCode": "4700",
+      "description": "psm Pork Ham 200.0 g",
+      "quantity": 50,
+      "unitPrice": 177.33,
+      "totalAmount": 9309.98
+    },
+    {
+      "itemCode": "470663",
+      "description": "psm Whole Wheat Momos - Veg & Paneer 330.0 g",
+      "quantity": 40,
+      "unitPrice": 162.86,
+      "totalAmount": 6839.99
+    },
+    {
+      "itemCode": "49168",
+      "description": "psm Peri Peri Veg Momos 15.0 Pieces",
+      "quantity": 80,
+      "unitPrice": 88.67,
+      "totalAmount": 7448
+    },
+    {
+      "itemCode": "498695",
+      "description": "psm Chicken Salami 200.0 g",
+      "quantity": 25,
+      "unitPrice": 137.52,
+      "totalAmount": 3610
+    },
+    {
+      "itemCode": "507809",
+      "description": "psm Pizza Minis Chicken Tikka 180.0 g",
+      "quantity": 50,
+      "unitPrice": 115.09,
+      "totalAmount": 6042.02
+    },
+    {
+      "itemCode": "598770",
+      "description": "psm Pork Breakfast Bacon 150.0 g",
+      "quantity": 36,
+      "unitPrice": 152,
+      "totalAmount": 5745.6
+    },
+    {
+      "itemCode": "6664",
+      "description": "psm Chicken Sausages 250.0 g",
+      "quantity": 380,
+      "unitPrice": 130.29,
+      "totalAmount": 51984.11
+    },
+    {
+      "itemCode": "730016",
+      "description": "psm Whole Wheat Chicken Momos 330.0 g",
+      "quantity": 80,
+      "unitPrice": 170.1,
+      "totalAmount": 14287.98
+    },
+    {
+      "itemCode": "750414",
+      "description": "psm Super Saver Chicken Momo Pack (Chef Momos) 1.0 kg",
+      "quantity": 72,
+      "unitPrice": 247.62,
+      "totalAmount": 18720
+    },
+    {
+      "itemCode": "755774",
+      "description": "psm Chicken & Cheese Momos 540.0 g",
+      "quantity": 25,
+      "unitPrice": 238.86,
+      "totalAmount": 6270
+    },
+    {
+      "itemCode": "790919",
+      "description": "Meatigo Everyday Fish Fillet 200.0 g",
+      "quantity": 30,
+      "unitPrice": 188.19,
+      "totalAmount": 5927.99
+    },
+    {
+      "itemCode": "81521",
+      "description": "psm Peri Peri Chicken Momos 250.0 g",
+      "quantity": 640,
+      "unitPrice": 72.02,
+      "totalAmount": 48396.8
+    }
+  ],
+  "originalFileName": "GRN.pdf",
+  "mimeType": "application/pdf",
+  "extractionConfidence": 1,
+  "fileHash": "1d5cbee053e150795b5e12d27cce3247be3e97ca45941aabe3b13bc9eed9ebe3",
+  "createdAt": "2026-03-27T19:11:08.074Z",
+  "updatedAt": "2026-03-27T19:11:08.074Z"
+}

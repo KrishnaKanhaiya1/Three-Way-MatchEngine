@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3-Way Match Engine — Reviewer Dashboard</title>
+  <meta name="description" content="Upload and review PO, GRN, and Invoice documents with AI-powered three-way matching" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Tokens ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0e1a;
+      --bg-card: rgba(255,255,255,0.04);
+      --bg-card-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --accent: #6366f1;
+      --accent-glow: rgba(99,102,241,0.25);
+      --green: #22c55e;
+      --green-bg: rgba(34,197,94,0.12);
+      --yellow: #eab308;
+      --yellow-bg: rgba(234,179,8,0.12);
+      --red: #ef4444;
+      --red-bg: rgba(239,68,68,0.12);
+      --blue: #3b82f6;
+      --blue-bg: rgba(59,130,246,0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 30px rgba(0,0,0,0.3);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ─── Background Gradient ─────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(99,102,241,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(139,92,246,0.1) 0%, transparent 50%),
+        var(--bg);
+    }
+
+    /* ─── Layout ──────────────────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.6s ease;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #a78bfa, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    header p { color: var(--text-dim); margin-top: 0.25rem; font-size: 0.95rem; }
+
+    /* ─── Cards ────────────────────────────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(12px);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: background 0.2s;
+    }
+    .card:hover { background: var(--bg-card-hover); }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .card-title .icon { font-size: 1.3rem; }
+
+    /* ─── Upload Section ──────────────────────────────────────────────── */
+    .upload-grid { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: end; }
+    @media (max-width: 640px) { .upload-grid { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .drop-zone .drop-text { color: var(--text-dim); font-size: 0.9rem; }
+    .drop-zone .drop-text strong { color: var(--accent); }
+    .drop-zone .file-name { color: var(--green); font-weight: 600; margin-top: 0.5rem; }
+    .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+    select {
+      appearance: none;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 0.65rem 2.5rem 0.65rem 0.8rem;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+    }
+    select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border: none; border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 30px var(--accent-glow); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-sm {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 6px;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+
+    /* ─── Status Badges ───────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-matched { background: var(--green-bg); color: var(--green); }
+    .badge-mismatch { background: var(--red-bg); color: var(--red); }
+    .badge-partial { background: var(--yellow-bg); color: var(--yellow); }
+    .badge-pending { background: var(--blue-bg); color: var(--blue); }
+    .badge-duplicate { background: var(--red-bg); color: var(--red); }
+
+    /* ─── Match Results Table ─────────────────────────────────────────── */
+    .results-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .results-table th {
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .results-table td {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .results-table tbody tr {
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .results-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+
+    /* ─── Item Detail (expandable) ────────────────────────────────────── */
+    .detail-panel {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin: 0.5rem 0 1rem;
+      padding: 1rem;
+      animation: fadeIn 0.3s ease;
+    }
+    .detail-panel h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-dim);
+    }
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+    .item-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+    }
+    .item-card.matched { border-left: 3px solid var(--green); }
+    .item-card.mismatched { border-left: 3px solid var(--red); }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .item-header .code { font-weight: 700; font-size: 0.9rem; }
+    .qty-row {
+      display: flex; gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+    .qty-row span { white-space: nowrap; }
+    .qty-row .label { color: var(--text-dim); }
+    .qty-row .value { color: var(--text); font-weight: 600; }
+    .reason-tag {
+      display: inline-block;
+      margin-top: 0.4rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--red-bg);
+      color: var(--red);
+      margin-right: 0.3rem;
+    }
+
+    /* ─── Toast ─────────────────────────────────────────────────────────── */
+    .toast-container {
+      position: fixed; top: 1rem; right: 1rem; z-index: 9999;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .toast {
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem; font-weight: 500;
+      animation: slideIn 0.3s ease;
+      box-shadow: var(--shadow);
+      max-width: 380px;
+    }
+    .toast-success { background: #065f46; color: #a7f3d0; }
+    .toast-error { background: #7f1d1d; color: #fca5a5; }
+    .toast-info { background: #1e3a5f; color: #93c5fd; }
+
+    /* ─── Spinner ───────────────────────────────────────────────────────── */
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* ─── Stats Row ─────────────────────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 0.3rem;
+    }
+
+    /* ─── Empty State ───────────────────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-dim);
+    }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 0.5rem; opacity: 0.5; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* ─── Confidence Bar ────────────────────────────────────────────────── */
+    .confidence-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin-top: 0.3rem;
+    }
+    .confidence-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    /* ─── Animations ──────────────────────────────────────────────────── */
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚡ Three-Way Match Engine</h1>
+      <p>Upload PO, GRN &amp; Invoice PDFs — AI extracts data &amp; matches automatically</p>
+    </header>
+
+    <!-- ── Stats ────────────────────────────────────────────────────── -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card"><div class="stat-number" id="statTotal">—</div><div class="stat-label">Total Matches</div></div>
+      <div class="stat-card"><div class="stat-number" style="color:var(--green)" id="statMatched">—</div><div class="stat-label">Matched</div></div>
+      <div class="stat-card"><div class="stat-number" style="color:var(--yellow)" id="statPartial">—</div><div class="stat-label">Partial</div></div>
+      <div class="stat-card"><div class="stat-number" style="color:var(--red)" id="statMismatch">—</div><div class="stat-label">Mismatch</div></div>
+    </div>
+
+    <!-- ── Upload ───────────────────────────────────────────────────── -->
+    <div class="card" id="uploadCard">
+      <div class="card-title"><span class="icon">📄</span> Upload Document</div>
+      <form id="uploadForm">
+        <div class="upload-grid">
+          <div class="form-group">
+            <label for="fileInput">PDF File</label>
+            <div class="drop-zone" id="dropZone">
+              <div class="drop-text"><strong>Click</strong> or drag a PDF here</div>
+              <div class="file-name" id="fileName" style="display:none"></div>
+              <input type="file" id="fileInput" accept="application/pdf" />
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;">
+            <div class="form-group">
+              <label for="docType">Document Type</label>
+              <select id="docType">
+                <option value="PO">Purchase Order (PO)</option>
+                <option value="GRN">Goods Receipt Note (GRN)</option>
+                <option value="INVOICE">Invoice</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="uploadBtn" disabled>
+              <span id="uploadBtnText">Upload &amp; Process</span>
+              <span id="uploadSpinner" class="spinner" style="display:none"></span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ── Match Results ────────────────────────────────────────────── -->
+    <div class="card">
+      <div class="card-title" style="justify-content:space-between;">
+        <span><span class="icon">🔍</span> Match Results</span>
+        <button class="btn btn-sm btn-outline" id="refreshBtn" onclick="loadMatchResults()">↻ Refresh</button>
+      </div>
+      <div id="resultsContainer">
+        <div class="empty-state">
+          <div class="icon">📋</div>
+          <p>No match results yet. Upload PO, GRN, and Invoice documents to start matching.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toast Container ──────────────────────────────────────────── -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    const API = '/api';
+
+    // ── Toast Notifications ──────────────────────────────────────────
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
+    }
+
+    // ── File Upload ──────────────────────────────────────────────────
+    const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('dropZone');
+    const fileName = document.getElementById('fileName');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadForm = document.getElementById('uploadForm');
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        fileName.textContent = fileInput.files[0].name;
+        fileName.style.display = 'block';
+        uploadBtn.disabled = false;
+      }
+    });
+
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length && e.dataTransfer.files[0].type === 'application/pdf') {
+        fileInput.files = e.dataTransfer.files;
+        fileName.textContent = e.dataTransfer.files[0].name;
+        fileName.style.display = 'block';
+        uploadBtn.disabled = false;
+      } else {
+        showToast('Please drop a PDF file', 'error');
+      }
+    });
+
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('documentType', document.getElementById('docType').value);
+
+      uploadBtn.disabled = true;
+      document.getElementById('uploadBtnText').textContent = 'Processing...';
+      document.getElementById('uploadSpinner').style.display = 'inline-block';
+
+      try {
+        const res = await fetch(`${API}/documents/upload`, { method: 'POST', body: formData });
+        const data = await res.json();
+
+        if (!res.ok) {
+          showToast(data.error || 'Upload failed', 'error');
+          return;
+        }
+
+        showToast(`${data.document.documentType} uploaded — ${data.document.itemCount} items extracted`, 'success');
+
+        if (data.matchResult) {
+          showToast(`Match: ${data.matchResult.status.replace(/_/g, ' ')}`, data.matchResult.status === 'matched' ? 'success' : 'info');
+        }
+
+        // Reset form
+        fileInput.value = '';
+        fileName.style.display = 'none';
+        uploadBtn.disabled = true;
+
+        await loadMatchResults();
+      } catch (err) {
+        showToast(`Error: ${err.message}`, 'error');
+      } finally {
+        document.getElementById('uploadBtnText').textContent = 'Upload & Process';
+        document.getElementById('uploadSpinner').style.display = 'none';
+        uploadBtn.disabled = !fileInput.files.length;
+      }
+    });
+
+    // ── Status Badge Helper ──────────────────────────────────────────
+    function statusBadge(status) {
+      const map = {
+        matched: ['badge-matched', '✓ Matched'],
+        partially_matched: ['badge-partial', '◐ Partial'],
+        mismatch: ['badge-mismatch', '✗ Mismatch'],
+        insufficient_documents: ['badge-pending', '⏳ Pending'],
+        duplicate_po: ['badge-duplicate', '⚠ Duplicate PO'],
+      };
+      const [cls, text] = map[status] || ['badge-pending', status];
+      return `<span class="badge ${cls}">${text}</span>`;
+    }
+
+    // ── Confidence Bar ───────────────────────────────────────────────
+    function confidenceBar(val) {
+      if (val == null) return '';
+      const pct = Math.round(val * 100);
+      const color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+      return `<div class="confidence-bar"><div class="confidence-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <span style="font-size:0.7rem;color:var(--text-dim)">${pct}% confidence</span>`;
+    }
+
+    // ── Render Item Details ──────────────────────────────────────────
+    function renderItemDetails(match) {
+      if (!match.itemDetails || match.itemDetails.length === 0) {
+        return '<p style="color:var(--text-dim);font-size:0.85rem;">No item-level details available.</p>';
+      }
+
+      let html = '<div class="item-grid">';
+      for (const item of match.itemDetails) {
+        const cls = item.isMatched ? 'matched' : 'mismatched';
+        const reasons = (item.reasonCodes || [])
+          .map(r => `<span class="reason-tag">${r.replace(/_/g, ' ')}</span>`)
+          .join('');
+
+        html += `
+          <div class="item-card ${cls}">
+            <div class="item-header">
+              <span class="code">${item.itemCode}</span>
+              ${item.isMatched
+                ? '<span class="badge badge-matched" style="font-size:0.65rem">✓</span>'
+                : '<span class="badge badge-mismatch" style="font-size:0.65rem">✗</span>'}
+            </div>
+            ${item.description ? `<div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:0.3rem">${item.description}</div>` : ''}
+            <div class="qty-row">
+              <span><span class="label">PO:</span> <span class="value">${item.poQty}</span></span>
+              <span><span class="label">GRN:</span> <span class="value">${item.grnQty}</span></span>
+              <span><span class="label">INV:</span> <span class="value">${item.invoiceQty}</span></span>
+            </div>
+            ${reasons}
+          </div>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    // ── Load Match Results ───────────────────────────────────────────
+    let expandedPO = null;
+
+    async function loadMatchResults() {
+      const container = document.getElementById('resultsContainer');
+
+      try {
+        const res = await fetch(`${API}/match`);
+        const data = await res.json();
+
+        if (!data.success || !data.data.length) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="icon">📋</div>
+              <p>No match results yet. Upload PO, GRN, and Invoice documents to start matching.</p>
+            </div>`;
+          updateStats([]);
+          return;
+        }
+
+        const matches = data.data;
+        updateStats(matches);
+
+        let html = `
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>PO Number</th>
+                <th>Status</th>
+                <th>Items</th>
+                <th>Summary</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+        for (const m of matches) {
+          const isExpanded = expandedPO === m.poNumber;
+          const dateStr = m.updatedAt ? new Date(m.updatedAt).toLocaleString() : '—';
+
+          html += `
+            <tr onclick="toggleDetail('${m.poNumber}')" style="${isExpanded ? 'background:rgba(99,102,241,0.08)' : ''}">
+              <td style="font-weight:600">${m.poNumber}</td>
+              <td>${statusBadge(m.status)}</td>
+              <td>${m.totalMatchedItems || 0}/${m.totalItems || 0}</td>
+              <td style="font-size:0.85rem;color:var(--text-dim);max-width:300px">${m.summary || '—'}</td>
+              <td style="font-size:0.8rem;color:var(--text-dim)">${dateStr}</td>
+            </tr>`;
+
+          if (isExpanded) {
+            html += `
+              <tr>
+                <td colspan="5" style="padding:0 1rem 1rem">
+                  <div class="detail-panel">
+                    <h4>📦 Item-Level Breakdown</h4>
+                    ${renderItemDetails(m)}
+                    ${m.invoiceDateAfterPoDate ? '<div style="margin-top:0.75rem"><span class="reason-tag">invoice date after po date</span> Invoice date is after PO date — anomalous.</div>' : ''}
+                    ${m.reasonCodes && m.reasonCodes.length ? `<div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim)">Top-level reason codes: ${m.reasonCodes.map(r => `<span class="reason-tag">${r.replace(/_/g,' ')}</span>`).join(' ')}</div>` : ''}
+                  </div>
+                </td>
+              </tr>`;
+          }
+        }
+
+        html += '</tbody></table>';
+        container.innerHTML = html;
+
+      } catch (err) {
+        container.innerHTML = `<div class="empty-state"><p style="color:var(--red)">Failed to load results: ${err.message}</p></div>`;
+      }
+    }
+
+    function toggleDetail(poNumber) {
+      expandedPO = expandedPO === poNumber ? null : poNumber;
+      loadMatchResults();
+    }
+
+    // ── Update Stats ─────────────────────────────────────────────────
+    function updateStats(matches) {
+      document.getElementById('statTotal').textContent = matches.length;
+      document.getElementById('statMatched').textContent = matches.filter(m => m.status === 'matched').length;
+      document.getElementById('statPartial').textContent = matches.filter(m => m.status === 'partially_matched').length;
+      document.getElementById('statMismatch').textContent = matches.filter(m => m.status === 'mismatch' || m.status === 'duplicate_po').length;
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────
+    loadMatchResults();
+  </script>
+</body>
+</html>
