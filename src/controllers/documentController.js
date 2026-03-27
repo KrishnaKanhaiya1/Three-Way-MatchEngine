@@ -23,7 +23,8 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (_req, file, cb) => {
-  if (file.mimetype === 'application/pdf') cb(null, true);
+  const isPDF = file.mimetype === 'application/pdf' || file.originalname.toLowerCase().endsWith('.pdf');
+  if (isPDF) cb(null, true);
   else cb(new Error('Only PDF files are allowed'), false);
 };
 
