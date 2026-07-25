@@ -1,6 +1,33 @@
+# Dependency directories
 node_modules/
-.env
-uploads/
-*.log
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Build outputs
 dist/
+build/
+.next/
+out/
+
+# Environment files & secrets
+.env
+.env.local
+.env.production
+.env.staging
+.env.pulled
+*.pem
+*.key
+
+# Logs & temp files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+error.log
+combined.log
 .DS_Store
+Thumbs.db
+.vercel

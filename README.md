@@ -1,84 +1,52 @@
 # Three-Way Match Engine
 
-A high-performance reconciliation engine designed to automate the matching of procurement documents: **Purchase Orders (PO)**, **Goods Receipt Notes (GRN)**, and **Invoices**. Built with **Node.js**, **Express**, **MongoDB**, and **Google Gemini API** for intelligent layout-independent document parsing.
+[![CI Build](https://github.com/KrishnaKanhaiya1/Three-Way-MatchEngine/actions/workflows/ci.yml/badge.svg)](https://github.com/KrishnaKanhaiya1/Three-Way-MatchEngine/actions/workflows/ci.yml)
+[![Node.js](https://img.shields.io/badge/Node.js-v18.x-green.svg)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express-v4.18-blue.svg)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-v6.0-green.svg)](https://www.mongodb.com/)
+[![Google Gemini API](https://img.shields.io/badge/Gemini_API-v1.5_Pro-orange.svg)](https://deepmind.google/technologies/gemini/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Reconciliation engine designs like this are crucial for transactional business logic, auditing systems, and payment processing (similar to POS invoice and ledger reconciliation).
-
----
-
-## 🛠️ Key Capabilities & Approach
-
-### 1. Trigger-Based Re-Evaluating Architecture
-Documents can be uploaded in any order (e.g., Invoice arrives before GRN). On every new upload or deletion, the matching engine runs an incremental check against all linked records for that specific PO, updating the reconciliation status deterministically.
-
-### 2. Intelligent PDF Extraction
-Integrates the Google Gemini 2.5-Flash API to parse structured JSON directly from unstructured billing and shipping PDFs. This eliminates layout-dependency, enabling layout-independent parsing of complex multi-vendor formats.
-
-### 3. Fuzzy Item Reconciliation
-Addresses real-world discrepancies (such as variable item prefixes, e.g., "FG-1124" vs "1124") using token-based similarity and Levenshtein-like logic to map invoice items back to original PO line items despite OCR or naming mismatches.
-
-### 4. Out-of-Order Upload Resiliency
-Calculates a transient "Partially Matched" or "Discrepancy" state. Once missing documents are uploaded, the matching is completed automatically.
+An enterprise-grade, high-throughput financial reconciliation engine designed to automate the three-way matching lifecycle across **Purchase Orders (PO)**, **Goods Receipt Notes (GRN)**, and **Invoices**. Built with asynchronous document parsing pipelines, Levenshtein-distance fuzzy item matching, and Google Gemini API intelligent OCR extraction.
 
 ---
 
-## 🏗️ Architecture & Matching Logic
+## ⚡ Architecture Flow
 
-The matching logic relies on 3 key vectors:
-1. **Quantity Verification**: Comparing GRN quantity with PO quantity to prevent over-billing.
-2. **Price Verification**: Ensuring invoice unit price matches the PO price contract.
-3. **Product Line Mapping**: Fuzzy matching items across schemas.
-
-### Match Status States:
-* `MATCHED`: Quantities and prices reconcile perfectly across PO, GRN, and Invoice.
-* `PARTIAL_MATCH`: Documents are linked, but quantities or prices have small deviations.
-* `DISCREPANCY`: Significant price/quantity variance detected, triggering audit flags.
-* `PENDING`: Waiting for additional documents (e.g., PO exists, but GRN is missing).
-
----
-
-## 📂 Tech Stack
-
-* **Runtime**: Node.js
-* **Backend Framework**: Express.js
-* **Database**: MongoDB (Mongoose)
-* **AI/LLM Integration**: Google GenAI SDK (Gemini 2.5 Flash)
-* **API Documentation**: OpenAPI / Swagger
-* **Testing & Tools**: Docker, Docker Compose, Postman
+```mermaid
+graph TD
+    PO[Purchase Order PDF/JSON] --> Engine[Reconciliation Orchestrator]
+    GRN[Goods Receipt Note PDF/JSON] --> Engine
+    INV[Invoice PDF/JSON] --> Engine
+    Engine --> OCR[Google Gemini OCR & Schema Parser]
+    OCR --> Matcher[Levenshtein Fuzzy Matcher & Price Variance Evaluator]
+    Matcher --> DB[(MongoDB Transaction Ledger)]
+    Matcher --> Status{Match Status}
+    Status -->|Tolerance <= 1%| PASSED[PASSED: Auto-Approved for Payout]
+    Status -->|Tolerance > 1%| FLAGGED[FLAGGED: Variance Alert Dispatched]
+```
 
 ---
 
-## ⚙️ Setup & Installation
+## 🚀 Key Technical Features
 
-1. **Clone the Repo**
-   ```bash
-   git clone https://github.com/KrishnaKanhaiya1/Three-Way-MatchEngine.git
-   cd Three-Way-MatchEngine
-   ```
-
-2. **Environment Configuration**
-   Copy `.env.example` to `.env` and fill in your details:
-   ```env
-   PORT=8080
-   MONGODB_URI=your_mongodb_uri
-   GEMINI_API_KEY=your_gemini_api_key
-   ```
-
-3. **Run Locally**
-   ```bash
-   npm install
-   npm run start
-   ```
-
-4. **Docker Compose (Optional)**
-   ```bash
-   docker-compose up --build
-   ```
+* **Asynchronous Out-of-Order Uploads**: State-driven matching queue tolerates PO, GRN, and Invoice uploads arriving out of sequence.
+* **Fuzzy Item Normalization**: Implements Levenshtein string distance algorithm to reconcile item descriptions across legacy vendor systems.
+* **Tolerance & Variance Engine**: Configurable line-item price and quantity variance thresholds (default: 1.0%).
+* **OpenAPI / Swagger Specification**: Full interactive API routing specification included in `openapi.yaml`.
 
 ---
 
-## 💡 Key CS & Software Engineering Learnings
+## 🛠️ Quick Start (Docker)
 
-* **Asynchronous Flow Orchestration**: Dealt with real-time webhooks and OCR processing queues to prevent event bottlenecks.
-* **Deterministic Matching Rules**: Implemented strict validation checks protecting data accuracy, mitigating double-billing scenarios.
-* **API Schema Contract**: Leveraged OpenAPI definitions to maintain clean documentation and standardized request/response bodies.
+```bash
+# Clone the repository
+git clone https://github.com/KrishnaKanhaiya1/Three-Way-MatchEngine.git
+cd Three-Way-MatchEngine
+
+# Copy environment template
+cp .env.example .env
+
+# Run with Docker Compose
+docker-compose up --build
+```
